@@ -1,0 +1,15 @@
+.team {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: lightslategrey;
+    color: white;
+}
+div {
+    margin: 25px;
+}
+#buttons-div {
+    border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 10px;
+}
