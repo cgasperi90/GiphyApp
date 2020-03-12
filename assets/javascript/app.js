@@ -5,7 +5,34 @@ var topicsArray = ["NFL", "Miami Dolphins", "New England Patriots", "New York Je
 
 
 function displayGifs() {
-    
+    var gifs = $(this).attr("data-team");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=HcBYw6HHGvc41ozxbH4tFwkNY1sKqG1m&q=" + gifs + "&limit=10&lang=en";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+       console.log(response);
+        //create a div to hold the gifs
+        var results = response.data;
+
+        for (var i = 0; i < results.length; i++) {
+            var gifDiv = $("<div>");
+
+            var teamImage = $("<img>");
+            teamImage.attr("src", results[i].images.fixed_height.url);
+
+            gifDiv.append(teamImage);
+
+            var rating = results[i].rating;
+            var p = $("<p>").text("Rating: " + rating.toUpperCase());
+            gifDiv.append(p);
+
+            $("#gifs-go-here").prepend(gifDiv)
+        }
+
+
+    })
 }
 
 
@@ -19,7 +46,7 @@ function renderButtons() {
     for (var i = 0; i < topicsArray.length; i++) {
         var makeButton = $("<button>");
         makeButton.addClass("team");
-        makeButton.attr("data-name", topicsArray[i]);
+        makeButton.attr("data-team", topicsArray[i]);
         makeButton.text(topicsArray[i]);$("#buttons-div").append(makeButton);
     }
 }
@@ -35,11 +62,17 @@ $("#search-button").on("click", function(event) {
     //we are calling our renderButtons function so the buttons
     //made after the on click function is completed.
     renderButtons();
+    
 
 
 });
 
+//making a listener for all buttons previously made on the page.
+$(document).on("click", ".team", displayGifs);
+
 //we have to call the render buttons function again so that
 //the initial buttons will show up.
 renderButtons();
+
+
 
