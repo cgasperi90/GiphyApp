@@ -17,16 +17,22 @@ function displayGifs() {
         var results = response.data;
 
         for (var i = 0; i < results.length; i++) {
+
             var gifDiv = $("<div>");
 
             var teamImage = $("<img>");
             teamImage.attr("src", results[i].images.fixed_height.url);
+            teamImage.addClass("gif");
 
             gifDiv.append(teamImage);
 
             var rating = results[i].rating;
-            var p = $("<p>").text("Rating: " + rating.toUpperCase());
+            var p = $("<h5>").text("Rating: " + rating.toUpperCase());
             gifDiv.append(p);
+
+            var title = results[i].title;
+            var pTwo = $("<h5>").text("Title: " + title);
+            gifDiv.append(pTwo);
 
             $("#gifs-go-here").prepend(gifDiv)
         }
@@ -66,6 +72,8 @@ $("#search-button").on("click", function(event) {
 
 
 });
+
+
 
 //making a listener for all buttons previously made on the page.
 $(document).on("click", ".team", displayGifs);
