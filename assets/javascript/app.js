@@ -22,7 +22,9 @@ function displayGifs() {
 
             var teamImage = $("<img>");
             teamImage.attr("src", results[i].images.fixed_height.url);
+            teamImage.attr("data-animate", results[i].images.fixed_height.url);
             teamImage.addClass("gif");
+            teamImage.attr("data-still", results[i].images.fixed_height_still.url);
 
             gifDiv.append(teamImage);
 
@@ -70,6 +72,19 @@ $("#search-button").on("click", function(event) {
     renderButtons();
     
 
+
+});
+
+$(document).on("click", ".gif", function() { 
+    var gifImage = $(this).attr("src")
+    var gifStill = $(this).attr("data-still");
+    var gifAnimate = $(this).attr("data-animate");
+
+    if (gifImage === gifStill) {
+        $(this).attr("src", gifAnimate);
+    } else {
+        $(this).attr("src", gifStill);
+    }
 
 });
 
